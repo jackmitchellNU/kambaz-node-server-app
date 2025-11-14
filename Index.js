@@ -1,7 +1,11 @@
-import Hello from "./Hello.js";
-import Lab5 from "./Lab5/index.js";
 import express from "express";
+import Lab5 from "./Lab5/index.js";
+import cors from "cors";
+import db from "./Kambaz/Database/index.js";
+import UserRoutes from "./Kambaz/Users/routes.js";
 const app = express();
-Lab5(app);
-Hello(app);
+UserRoutes(app, db);
+app.use(cors()); 
+app.use(express.json());                   
+Lab5(app);                          // express instance
 app.listen(process.env.PORT || 4000)
