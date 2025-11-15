@@ -6,7 +6,9 @@ import express from "express";
 import cors from "cors";
 import db from "./Kambaz/Database/index.js";
 import Lab5 from "./Lab5/index.js";
+import Hello from "./Hello.js";
 const app = express();
+Hello(app);
 app.use(
   cors({
     credentials: true,
