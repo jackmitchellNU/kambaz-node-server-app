@@ -15,10 +15,15 @@ app.use(
   // credentials (cookies) can be sent from various localhost hosts.
   cors({
     credentials: true,
-    origin:
-      process.env.SERVER_ENV === "development"
-        ? true
-        : process.env.CLIENT_URL || "http://localhost:3000",
+    origin: (origin, callback) => {
+      if (process.env.SERVER_ENV === "development") {
+        callback(null, true);
+      } else if (!origin || origin.includes("localhost") || origin.includes("vercel.app") || origin === process.env.CLIENT_URL) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 const sessionOptions = {
