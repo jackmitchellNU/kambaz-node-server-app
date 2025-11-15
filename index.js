@@ -11,9 +11,14 @@ import Hello from "./Hello.js";
 const app = express();
 Hello(app);
 app.use(
+  // Allow the client origin and reflect origins in development so
+  // credentials (cookies) can be sent from various localhost hosts.
   cors({
     credentials: true,
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin:
+      process.env.SERVER_ENV === "development"
+        ? true
+        : process.env.CLIENT_URL || "http://localhost:3000",
   })
 );
 const sessionOptions = {
