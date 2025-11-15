@@ -12,9 +12,17 @@ function deleteModule(moduleId) {
   const { modules } = db;
   db.modules = modules.filter((module) => module._id !== moduleId);
 }
+function updateModule(moduleId, moduleUpdates) {
+  const { modules } = db;
+  const module = modules.find((module) => module._id === moduleId);
+  Object.assign(module, moduleUpdates);
+  return module;
+}
 
  return {
    findModulesForCourse,
    createModule,
+   deleteModule,
+   updateModule,
  };
 }
