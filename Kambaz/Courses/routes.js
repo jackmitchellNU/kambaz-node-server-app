@@ -10,6 +10,15 @@ export default function CourseRoutes(app, db) {
     res.json(newCourse);
   };
   app.post("/api/users/current/courses", createCourse);
+  app.get("/api/users/current/courses", (req, res) => {
+    const currentUser = req.session["currentUser"];
+    if (!currentUser) {
+      res.sendStatus(401);
+      return;
+    }
+    const courses = dao.findCoursesForEnrolledUser(currentUser._id);
+    res.json(courses);
+  });
   const findAllCourses = (req, res) => {
     const courses = dao.findAllCourses();
     res.send(courses);
