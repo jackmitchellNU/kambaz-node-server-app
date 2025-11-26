@@ -3,11 +3,15 @@ import session from "express-session";
 import UserRoutes from "./Kambaz/Users/routes.js";
 import CourseRoutes from "./Kambaz/Courses/routes.js";
 import ModulesRoutes from "./Kambaz/Modules/routes.js";
+import EnrollmentRoutes from "./Kambaz/Enrollments/routes.js";
 import express from "express";
 import cors from "cors";
 import db from "./Kambaz/Database/index.js";
 import Lab5 from "./Lab5/index.js";
 import Hello from "./Hello.js";
+import mongoose from "mongoose";
+const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kambaz"
+mongoose.connect(CONNECTION_STRING);
 const app = express();
 Hello(app);
 app.use(
@@ -44,5 +48,6 @@ app.use(express.json());
 UserRoutes(app, db);
 CourseRoutes(app, db);                
 ModulesRoutes(app, db);
+EnrollmentRoutes(app, db);
 Lab5(app);                          // express instance
 app.listen(process.env.PORT || 4000)

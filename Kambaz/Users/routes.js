@@ -3,7 +3,23 @@ export default function UserRoutes(app, db) {
   const dao = UsersDao(db);
   const createUser = (req, res) => {};
   const deleteUser = (req, res) => {};
-  const findAllUsers = (req, res) => {};
+  const findAllUsers = (req, res) => {
+    const { role, name } = req.query;
+    let users = dao.findAllUsers();
+    
+    if (role) {
+      users = users.filter((user) => user.role === role);
+    }
+    
+    if (name) {
+      users = users.filter((user) => {
+        const regex = new RegExp(name, "i");
+        return regex.test(user.firstName) || regex.test(user.lastName) || regex.test(user.username);
+      });
+    }
+    
+    res.json(users);
+  };
   const findUserById = (req, res) => {};
   const updateUser = (req, res) => {
     const userId = req.params.userId;
