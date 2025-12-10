@@ -11,8 +11,6 @@ import Hello from "./Hello.js";
 const app = express();
 Hello(app);
 app.use(
-  // Allow the client origin and reflect origins in development so
-  // credentials (cookies) can be sent from various localhost hosts.
   cors({
     credentials: true,
     origin: (origin, callback) => {
@@ -44,5 +42,5 @@ app.use(express.json());
 UserRoutes(app, db);
 CourseRoutes(app, db);                
 ModulesRoutes(app, db);
-Lab5(app);                          // express instance
+Lab5(app);
 app.listen(process.env.PORT || 4000)
